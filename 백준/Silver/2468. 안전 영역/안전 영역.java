@@ -1,5 +1,3 @@
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 
 public class Main {
@@ -8,7 +6,7 @@ public class Main {
     static int[][] area;
     static int N = 0;
     static boolean[][] visited;
-    static int[] tempAnswer = new int[101];
+    static int tempAnswer = 0;
     static int answer = 1;
 
     public static void main(String[] args) throws Exception {
@@ -26,23 +24,19 @@ public class Main {
         //Step1. 높이 n(1~100) 이하인 모든 지점이 물에 잠김 처리
         for(int i = 1; i <= 100; i++){
             visited = new boolean[N][N];    // 높이가 변경될때 마다 방문처리배열 초기화
+            tempAnswer = 0;
 
             for(int x = 0; x < N; x++){
                 for(int y = 0; y < N; y++){
                     //Step2. 물에 잠기지 않은 영역(i 이상인 지역만)에 대해 BFS 탐색
                     if(area[x][y] > i && !visited[x][y]){
                         visited[x][y] = true;
-                        tempAnswer[i]++;
+                        tempAnswer++;
                         bfs(x,y,i);
                     }
                 }
             }
-        }
-        
-
-        //tempAnswer 배열에서 영역의 개수가 최대인것 = 정답
-        for(int i=1; i<=100; i++){
-            if(tempAnswer[i] > answer) answer = tempAnswer[i];
+            answer = Math.max(tempAnswer, answer);
         }
 
         System.out.println(answer);
