@@ -1,30 +1,24 @@
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    static Stack<Integer> inputStack = new Stack<>();
-    static Stack<Integer> resultStack = new Stack<>();
-    static StringBuilder sb = new StringBuilder();
-    
-        public static void main(String[] args) throws Exception {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            int n = Integer.parseInt(br.readLine());
-            
-            for (int i = 0; i < n; i++) {
-                inputStack.push(Integer.parseInt(br.readLine()));
-            }
 
-            boolean result = isPossible(n, inputStack);
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-            if (result) System.out.println(sb.toString());
-            else System.out.println("NO");
-    }
+        int n = Integer.parseInt(br.readLine());
 
-    public static boolean isPossible(int n, Stack<Integer> inputStack) {
-        // 입력 Stack 처럼 정렬이 가능한지 여부 판단
+        Stack<Integer> inputStack = new Stack<>();
+        Stack<Integer> resultStack = new Stack<>();
+        for (int i = 0; i < n; i++) {
+            inputStack.push(Integer.parseInt(br.readLine()));
+        }
+
+        StringBuilder sb = new StringBuilder();
+        
         boolean isPossible = true;
-        int num = 1;    // 오름차순으로 정렬된 수열 1~n
+        int num = 1;
         
         for (int i = 0; i < n; i++) {
             int inputValue = inputStack.get(i);
@@ -35,7 +29,7 @@ public class Main {
                 num++;
             }
 
-            if(!resultStack.isEmpty() && resultStack.peek() == inputValue) {
+            if (!resultStack.isEmpty() && resultStack.peek() == inputValue) {
                 resultStack.pop();
                 sb.append("-\n");
             } else {
@@ -43,36 +37,9 @@ public class Main {
                 break;
             }
         }
-        return isPossible;
+
+        if(isPossible) System.out.println(sb);
+        else System.out.println("NO");
     }
 }
 
-/* [] : pop 연산된 숫자의 수열 = inputStack -> true
- * 1. push
- * 1
- * 
- * 2. push
- * 1, 2
- * 
- * 3. push
- * 1, 2, 3
- * 
- * 4. push
- * 1, 2, 3, 4
- * 
- * 5. pop [4]
- * 
- * 1, 2, 3
- * 6. pop [4,3]
- * 
- * 1, 2
- * 7. push [4,3]
- * 
- * 1, 2, 5
- * 8. push [4,3]
- * 
- * 1, 2, 5, 6
- * 9. pop [4, 3, 6]
- * ...
- * ..
- */
