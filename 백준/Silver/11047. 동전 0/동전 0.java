@@ -17,21 +17,14 @@ public class Main {
             costs[i] = Integer.parseInt(br.readLine());
         }
         
-        int costValue = 0;      // 갱신되는 현재 금액
+        int costValue = K;      // 갱신되는 현재 금액
         int count = 0;
 
-        while (costValue <= K) {
-            if(costValue == K) break;
-            int tempCostValue = 0;
-
-            for (int i = 0; i < N; i++) {
-                // 남은 금액과 같거나 작은 동전 중 제일 큰 값을 선택
-                if(costs[i] <= K - costValue) {
-                    tempCostValue = Math.max(costs[i], tempCostValue);
-                }
+        for (int i = N-1; i >= 0; i--) {
+            if(costs[i] <= costValue) {
+                count += costValue / costs[i];       // 선택한 동전의 필요 개수
+                costValue = costValue % costs[i];    // 남은 금액 : 금액총합(K) - 선택된 동전 합계
             }
-            costValue += tempCostValue;
-            count++;
         }
         
         System.out.println(count);
