@@ -41,7 +41,7 @@ public class Main {
                 minHeap.poll();
             }
             
-            if(hashMap.isEmpty()) {
+            if(maxHeap.isEmpty() && minHeap.isEmpty()) {
                 sb.append("EMPTY").append("\n");
             } else {
                 sb.append(maxHeap.poll()).append(" ").append(minHeap.poll()).append("\n");
