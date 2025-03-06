@@ -62,11 +62,11 @@ public class Main {
                     break;
                 case "front":
                     if(!deque.isEmpty()) sb.append(deque.peekFirst()).append("\n");
-                    else sb.append("-1").append("\n");
+                    else sb.append("-1\n");
                     break;
                 case "back":
                     if(!deque.isEmpty()) sb.append(deque.peekLast()).append("\n");
-                    else sb.append("-1").append("\n");
+                    else sb.append("-1\n");
                     break;
                 default:
                     break;
