@@ -1,32 +1,33 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.Buffer;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String roomNumber = br.readLine();
+        int room = Integer.parseInt(br.readLine());
+        int[] digitCount = new int[10]; // 0-9 배열
 
-        // 숫자저장 배열 (0~9)
-        int[] digitCounts = new int[10];
-
-        // 각 숫자의 등장 횟수 계산
-        for (char digit : roomNumber.toCharArray()) {
-            digitCounts[digit - '0']++;
+        // 각 자리수의 숫자 개수를 세기
+        for (char ch : String.valueOf(room).toCharArray()) {
+            digitCount[ch - '0']++;
         }
 
-        // 6과 9는 뒤집어서 사용 가능
-        int sixNineCount = digitCounts[6] + digitCounts[9];
-        digitCounts[6] = (sixNineCount + 1) / 2;
-        digitCounts[9] = 0;
-
-        int maxSetCount = 0;
-        for (int count : digitCounts) {
-            maxSetCount = Math.max(maxSetCount, count);
+        // 6, 9는 동일 취급
+        if (digitCount[6] + digitCount[9] > 0) {
+            int sixNineCount = digitCount[6] + digitCount[9];
+            digitCount[6] = digitCount[9] = (sixNineCount + 1) / 2; // 올림 처리
         }
 
-        // 결과 출력
-        System.out.println(maxSetCount);
+        // 가장 많이 사용된 숫자의 개수를 찾기
+        int maxCount = 0;
+        for (int count : digitCount) {
+            if (count > maxCount) {
+                maxCount = count;
+            }
+        }
+
+        System.out.println(maxCount);
     }
 }
