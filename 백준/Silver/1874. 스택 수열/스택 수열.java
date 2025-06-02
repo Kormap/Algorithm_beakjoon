@@ -1,45 +1,47 @@
-import java.io.BufferedReader;
 import java.io.*;
 import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(br.readLine());
+        int[] nums = new int[n];
 
-        Stack<Integer> inputStack = new Stack<>();
-        Stack<Integer> resultStack = new Stack<>();
         for (int i = 0; i < n; i++) {
-            inputStack.push(Integer.parseInt(br.readLine()));
+            nums[i] = Integer.parseInt(br.readLine());
         }
 
+        Stack<Integer> stack = new Stack();
         StringBuilder sb = new StringBuilder();
-        
-        boolean isPossible = true;
-        int num = 1;
-        
-        for (int i = 0; i < n; i++) {
-            int inputValue = inputStack.get(i);
 
-            while (num <= inputValue) {
-                resultStack.push(num);
+        int current = 1; // 오름차순 숫자 초기설정
+        int idx = 0; // while문 인덱스
+        boolean isPossible = true;
+
+        while (idx < n) {
+            int target = nums[idx];
+
+            // 타겟숫자까지 적재
+            while (current <= target) {
+                stack.push(current++);
                 sb.append("+\n");
-                num++;
             }
 
-            if (!resultStack.isEmpty() && resultStack.peek() == inputValue) {
-                resultStack.pop();
+            // 타겟숫자인 경우 pop
+            if (stack.peek() == target) {
+                stack.pop();
                 sb.append("-\n");
+                idx++;
             } else {
                 isPossible = false;
                 break;
             }
         }
 
-        if(isPossible) System.out.println(sb);
-        else System.out.println("NO");
+        if (isPossible)
+            System.out.println(sb.toString());
+        else
+            System.out.println("NO");
     }
 }
-
