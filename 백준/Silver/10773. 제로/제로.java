@@ -1,26 +1,26 @@
-import java.util.Scanner;
-import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    static Scanner sc = new Scanner(System.in);
-
     public static void main(String[] args) throws Exception {
-       int K = sc.nextInt();
-       Stack<Integer> stack = new Stack();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-       for(int i = 0; i < K; i++) {
-            int money = sc.nextInt();
-            if(money == 0) {
-                stack.pop();
+        int K = Integer.parseInt(br.readLine());
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < K; i++) {
+            int input = Integer.parseInt(br.readLine());
+            if (input != 0) {
+                stack.push(input);
             } else {
-                stack.push(money);
+                stack.pop();
             }
-       }
-       
-       int sum = 0;
-       while(!stack.isEmpty()){
-            sum += stack.pop();
-       }
-       System.out.println(sum);
+        }
+
+        int totalPrice = 0;
+        for (int price : stack) {
+            totalPrice += price;
+        }
+        System.out.println(totalPrice);
     }
 }
